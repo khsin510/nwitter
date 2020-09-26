@@ -9,10 +9,10 @@ const Home = ({userObj}) => {
     
     
     useEffect(() => {
-        // getNweets();
+       
         dbService.collection("nweets").onSnapshot(snapshot =>{
             const nweetArray = snapshot.docs.map(doc => ({
-                id:doc.id, 
+                id: doc.id, 
                 ...doc.data()
             }));
             setNweets(nweetArray)
@@ -23,7 +23,7 @@ const Home = ({userObj}) => {
         e.preventDefault();
         await dbService.collection("nweets").add({
             text : nweet,
-            createAt:Date.now(),
+            createAt : Date.now(),
             createId : userObj.uid
         });
         setNweet("");
