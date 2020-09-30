@@ -1,10 +1,39 @@
-import React from "react";
-import { authService } from "fbase";
-export default () => {
-    const onLogOutClick=()=>{
+import React, {  useState } from "react";
+import { authService }  from "fbase";
+import { useHistory } from "react-router-dom";
+
+export default ({userObj, refreshUser}) => {
+    const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+   
+    const history = useHistory();
+    const onLogOutClick=()=> {
         authService.signOut();
+        history.push('/');
     }
+    const onChange = (event) => {
+        const {
+          target: { value },
+        } = event;
+        setNewDisplayName(value);
+      };
+      const onSubmit = async (event) => {
+        event.preventDefault();
+        if (userObj.displayName !== newDisplayName) {
+          await userObj.updateProfile({
+            displayName: newDisplayName,
+          });
+          refreshUser();
+        }
+        history.push('/');
+      };
+
     return(
-        <><button type="button" onClick={onLogOutClick}>Sign Out </button></>
+        <>
+            <form onSubmit={onSubmit} >
+                <input type="text" placeholder="Diplay name" onChange={onChange} value={newDisplayName}/>
+                <input type="submit" value="Update Profile" />
+            </form>
+            <button type="button" onClick={onLogOutClick}>Sign Out </button>
+        </>
     )
 }
