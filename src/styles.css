@@ -277,3 +277,20 @@ form {
   font-size: 12px;
   text-decoration: underline;
 }
+
+.navLink {
+  margin-left : 10px;
+  display : flex;
+  flex-direction : column;
+  align-items : center;
+  font-size : 12px;
+}
+
+.nav_route {
+  max-width: 890px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+}
